@@ -1,6 +1,7 @@
 class Robot {
   constructor() {
     this.history = [];
+    this.facing = 'NORTH';
   }
 
   parseArgs(params) {
