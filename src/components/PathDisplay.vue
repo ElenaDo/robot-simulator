@@ -1,6 +1,6 @@
 <template>
   <div>
-    <canvas id="canvas" width="400" height="400">
+    <canvas id="canvas" width="600" height="600">
     </canvas>
   </div>
 </template>
@@ -29,20 +29,26 @@ export default {
     const canvas = document.getElementById('canvas');
     const ctx = canvas.getContext('2d');
     ctx.lineWidth = 2;
-    this.vueCanvas = ctx;
-    this.vueCanvas.translate(canvas.width / 2, canvas.height / 2);
-    this.vueCanvas.strokeStyle = 'blue';
+    ctx.translate(canvas.width / 2, canvas.height / 2);
+    ctx.strokeStyle = 'blue';
+    this.ctx = ctx;
     this.movePath();
   },
   watch: {
     history: {
       handler: 'movePath',
-      immediate: true,
     },
   },
   methods: {
+    clear() {
+      const { ctx } = this;
+      const { width } = ctx.canvas;
+      const halfWidth = width / 2;
+      ctx.clearRect(-halfWidth, -halfWidth, width, width);
+    },
     movePath() {
-      const ctx = this.vueCanvas;
+      this.clear();
+      const { ctx } = this;
       let prevX;
       let prevY;
       const move = (step, i) => {
@@ -58,38 +64,39 @@ export default {
         ctx.stroke();
         if (i === this.history.length - 1) this.drawTriangle();
       };
-      this.history.forEach((step, i) => setTimeout(() => move(step, i), 10 * i));
+      this.history.forEach((step, i) => setTimeout(() => move(step, i), 30 * i));
     },
     drawTriangle() {
-      this.vueCanvas.beginPath();
+      const { ctx } = this;
+      ctx.beginPath();
       const { history, facing } = this;
       const [x, y] = history[history.length - 1];
       const side = 15;
       const scaledX = x * this.scale;
       const scaledY = y * this.scale;
-      this.vueCanvas.moveTo(scaledX, -scaledY);
+      ctx.moveTo(scaledX, -scaledY);
       switch (facing) {
         case 'EAST':
-          this.vueCanvas.moveTo(scaledX, -scaledY - side / 2);
-          this.vueCanvas.lineTo(scaledX + side, -scaledY);
-          this.vueCanvas.lineTo(scaledX, -scaledY + side / 2);
+          ctx.moveTo(scaledX, -scaledY - side / 2);
+          ctx.lineTo(scaledX + side, -scaledY);
+          ctx.lineTo(scaledX, -scaledY + side / 2);
           break;
         case 'WEST':
-          this.vueCanvas.lineTo(scaledX, -scaledY - side / 2);
-          this.vueCanvas.lineTo(scaledX - side, -scaledY);
-          this.vueCanvas.lineTo(scaledX, -scaledY + side / 2);
+          ctx.lineTo(scaledX, -scaledY - side / 2);
+          ctx.lineTo(scaledX - side, -scaledY);
+          ctx.lineTo(scaledX, -scaledY + side / 2);
           break;
         case 'SOUTH':
-          this.vueCanvas.lineTo(scaledX + side / 2, -scaledY);
-          this.vueCanvas.lineTo(scaledX, -scaledY + side);
-          this.vueCanvas.lineTo(scaledX - side / 2, -scaledY);
+          ctx.lineTo(scaledX + side / 2, -scaledY);
+          ctx.lineTo(scaledX, -scaledY + side);
+          ctx.lineTo(scaledX - side / 2, -scaledY);
           break;
         default: // NORTH
-          this.vueCanvas.lineTo(scaledX + side / 2, -scaledY);
-          this.vueCanvas.lineTo(scaledX, -scaledY - side);
-          this.vueCanvas.lineTo(scaledX - side / 2, -scaledY);
+          ctx.lineTo(scaledX + side / 2, -scaledY);
+          ctx.lineTo(scaledX, -scaledY - side);
+          ctx.lineTo(scaledX - side / 2, -scaledY);
       }
-      this.vueCanvas.fill();
+      ctx.fill();
     },
   },
 };

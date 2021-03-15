@@ -1,5 +1,6 @@
 <template>
   <div id="app">
+    <InputPanel @directions="passDirections" />
     <PathDisplay
       :history="robot.history"
       :facing="robot.facing"
@@ -9,6 +10,7 @@
 
 <script>
 import { Robot } from '@/robot-simulator';
+import InputPanel from './components/InputPanel.vue';
 import PathDisplay from './components/PathDisplay.vue';
 
 export default {
@@ -18,14 +20,19 @@ export default {
       history: [],
       facing: 'NORTH',
     },
+    directions: '',
   }),
   components: {
     PathDisplay,
+    InputPanel,
   },
   mounted() {
     this.robot = new Robot();
-    console.log(this.robot);
-    this.robot.execute('0 0 NORTH RAALALLLAALAAAA');
+  },
+  methods: {
+    passDirections(val) {
+      this.robot.execute(val);
+    },
   },
 };
 </script>
