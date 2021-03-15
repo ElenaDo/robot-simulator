@@ -17,7 +17,7 @@ class Robot {
     const change = dir === 'L' ? -1 : 1;
     let newDirectionIndex = directionIndex + change;
     if (newDirectionIndex < 0) newDirectionIndex = directions.length - 1;
-    if (newDirectionIndex > directions.length) newDirectionIndex = 0;
+    if (newDirectionIndex >= directions.length) newDirectionIndex = 0;
     this.facing = directions[newDirectionIndex];
   }
 
