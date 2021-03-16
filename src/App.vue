@@ -51,10 +51,6 @@ body, button, input, select {
   text-align: center;
   color: #2c3e50;
 }
-#canvas {
-  border: 1px solid #d3d3d3;
-  max-width: 100%;
-}
 select{
   padding: .2em;
   border-radius: .2em;

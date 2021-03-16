@@ -1,6 +1,6 @@
 <template>
   <div>
-    <canvas id="canvas" width="600" height="600">
+    <canvas ref="canvas" width="600" height="600">
     </canvas>
   </div>
 </template>
@@ -26,7 +26,7 @@ export default {
   data: () => ({
   }),
   mounted() {
-    const canvas = document.getElementById('canvas');
+    const { canvas } = this.$refs;
     const ctx = canvas.getContext('2d');
     ctx.lineWidth = 2;
     ctx.translate(canvas.width / 2, canvas.height / 2);
@@ -102,3 +102,10 @@ export default {
   },
 };
 </script>
+
+<style scoped>
+canvas {
+  border: 1px solid #d3d3d3;
+  max-width: 100%;
+}
+</style>
