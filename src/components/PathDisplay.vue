@@ -30,7 +30,7 @@ export default {
     const ctx = canvas.getContext('2d');
     ctx.lineWidth = 2;
     ctx.translate(canvas.width / 2, canvas.height / 2);
-    ctx.strokeStyle = 'blue';
+    ctx.strokeStyle = '#0f7caf';
     this.ctx = ctx;
     this.movePath();
   },
@@ -68,6 +68,7 @@ export default {
     },
     drawTriangle() {
       const { ctx } = this;
+      ctx.fillStyle = '#0f7caf';
       ctx.beginPath();
       const { history, facing } = this;
       const [x, y] = history[history.length - 1];
