@@ -1,6 +1,6 @@
 <template>
   <div>
-    <p class="instructions">Select initilal position and input the movements of a robot.
+    <p class="instructions">Select initilal position and input the movements of a robot.<br>
         The robot can have three possible movements:
         <code>"R"</code> - turn right, <code>"L"</code> - turn left, <code>"A"</code> - advance</p>
     <div class="select-panel">
@@ -88,14 +88,16 @@ export default {
   width: 80%;
   border: 1px solid lightgray;
   border-radius: .2em;
+  padding: 0 .5em;
   font-size: 1.5em;
-  letter-spacing: 0.3em;
+  letter-spacing: .3em;
 }
 
 .instructions {
   max-width: 600px;
   margin: auto;
   text-align: left;
+  line-height: 1.5em;
 }
 .instructions code{
   color: #0f7caf;
@@ -110,7 +112,7 @@ button {
   color: white;
   text-transform: uppercase;
   cursor: pointer;
-  margin: 0 0 0 0.5em;
+  margin: 0 0 0 .5em;
   transition: background-color .5s;
 }
 button:hover{
