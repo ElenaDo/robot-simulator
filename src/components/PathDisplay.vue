@@ -31,6 +31,7 @@ export default {
     ctx.lineWidth = 2;
     ctx.translate(canvas.width / 2, canvas.height / 2);
     ctx.strokeStyle = '#0f7caf';
+    ctx.fillStyle = '#0f7caf';
     this.ctx = ctx;
     this.movePath();
   },
@@ -48,16 +49,21 @@ export default {
     },
     movePath() {
       this.clear();
-      const { ctx } = this;
+      const { ctx, scale } = this;
       let prevX;
       let prevY;
       const move = (step, i) => {
         ctx.beginPath();
         const [x, y] = step;
-        const toX = x * this.scale;
-        const toY = y * -this.scale;
-        if (prevX !== undefined) ctx.moveTo(prevX, prevY);
-        else ctx.moveTo(toX, toY);
+        const toX = x * scale;
+        const toY = y * -scale;
+        if (prevX !== undefined) {
+          ctx.moveTo(prevX, prevY);
+        } else {
+          ctx.moveTo(toX, toY);
+          ctx.arc(toX, toY, 0.2 * scale, 0, 2 * Math.PI);
+          ctx.fill();
+        }
         if (i !== 0) ctx.lineTo(toX, toY);
         prevX = toX;
         prevY = toY;
@@ -68,7 +74,6 @@ export default {
     },
     drawTriangle() {
       const { ctx } = this;
-      ctx.fillStyle = '#0f7caf';
       ctx.beginPath();
       const { history, facing } = this;
       const [x, y] = history[history.length - 1];
