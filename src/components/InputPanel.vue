@@ -26,7 +26,7 @@
       </select>
       </div>
     <div>
-      <input v-model="path"/>
+      <input size="50" v-model="path" @keypress.prevent="keyCheck"/>
       <button @click="passDirections">execute</button>
     </div>
   </div>
@@ -51,6 +51,14 @@ export default {
     passDirections() {
       const directions = `${this.selectedX} ${this.selectedY} ${this.selectedFacing} ${this.path}`;
       this.$emit('directions', directions);
+    },
+    keyCheck(event) {
+      const allowed = ['A', 'L', 'R'];
+      const key = event.key.toUpperCase();
+      const { selectionStart, selectionEnd } = event.target;
+      if (allowed.includes(key)) {
+        this.path = this.path.slice(0, selectionStart) + key + this.path.slice(selectionEnd);
+      }
     },
   },
 };
